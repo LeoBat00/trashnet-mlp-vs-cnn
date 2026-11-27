@@ -23,7 +23,15 @@ Divisão estratificada 70/15/15 com semente 42 (`results/split.csv`), a mesma no
 | 5 | CNN | 256×192 | Não | 0,541 | 0,529 | 0,511 | 94.694 | 2,2 min |
 | 6 | CNN | 512×384 | Não | 0,541 | 0,597 | 0,537 | 94.694 | 13,6 min |
 
-Modelo selecionado (maior F1 macro de validação): **experimento 2**. Tabelas completas (custo, métricas por classe, efeito dos pesos) em [`results/tables/`](results/tables/) e figuras em [`results/figures/`](results/figures/).
+Modelo selecionado (maior F1 macro de validação): **experimento 2**. Artigo completo: [`artigo/artigo_trashnet.pdf`](artigo/artigo_trashnet.pdf).
+
+**CNN sem pesos: desempenho × custo por resolução.** O F1 macro de teste sobe só de 0,509 para 0,537, enquanto o tempo total de treino cresce cerca de 21 vezes.
+
+![Desempenho e custo da CNN por resolução](results/figures/res_04_resolucao.png)
+
+**Matrizes de confusão no teste** (reais nas linhas, previstas nas colunas). Com pesos de classe, a CNN passa a prever `trash` para muitos vidros (experimento 4).
+
+![Matrizes de confusão dos seis experimentos](results/figures/res_03_matrizes_confusao.png) Tabelas completas (custo, métricas por classe, efeito dos pesos) em [`results/tables/`](results/tables/) e figuras em [`results/figures/`](results/figures/).
 
 ## Estrutura do repositório
 
@@ -31,6 +39,7 @@ Modelo selecionado (maior F1 macro de validação): **experimento 2**. Tabelas c
 trashnet-mlp-vs-cnn/
 ├── README.md
 ├── requirements.txt
+├── artigo/            # artigo em PDF (entregue no AVA) e .docx editável
 ├── src/
 │   ├── config.py      # semente, classes, divisão, hiperparâmetros e os 6 experimentos
 │   ├── dataset.py     # listagem das imagens
@@ -57,6 +66,8 @@ trashnet-mlp-vs-cnn/
 - Repositório original: [garythung/trashnet](https://github.com/garythung/trashnet)
 - Arquivo usado: [dataset-resized.zip](https://huggingface.co/datasets/garythung/trashnet/resolve/main/dataset-resized.zip?download=true) (2.527 imagens, 512×384, RGB)
 - Artigo de referência: [Yang e Thung (2016)](https://cs229.stanford.edu/proj2016/report/ThungYang-ClassificationOfTrashForRecyclabilityStatus-report.pdf)
+
+<p align="center"><img src="results/figures/eda_02_exemplos_por_classe.png" alt="Três exemplos de cada classe do TrashNet" width="420"></p>
 
 O dataset não está versionado. Para rodar localmente, descompacte o zip em `data/` (fica `data/dataset-resized/<classe>/...`).
 
