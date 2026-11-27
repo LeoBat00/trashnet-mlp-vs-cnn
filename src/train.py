@@ -104,12 +104,18 @@ def versoes():
 # Treino
 # --------------------------------------------------------------------------
 def preparar_reprodutibilidade():
-    """Mesma semente para Python, NumPy e TensorFlow + operacoes deterministicas."""
+    """Mesma semente para Python, NumPy e TensorFlow + operacoes deterministicas.
+
+    Se alguma operacao nao tiver versao deterministica na GPU, o TensorFlow
+    avisa com erro; nesse caso rodar com TRASHNET_DETERMINISMO=0 (a semente
+    continua fixa, so a ordem de algumas somas na GPU pode variar).
+    """
     import tensorflow as tf
     from tensorflow import keras
 
     keras.utils.set_random_seed(SEED)
-    tf.config.experimental.enable_op_determinism()
+    if os.environ.get("TRASHNET_DETERMINISMO", "1") == "1":
+        tf.config.experimental.enable_op_determinism()
 
 
 def _salvar_json(caminho, obj):
