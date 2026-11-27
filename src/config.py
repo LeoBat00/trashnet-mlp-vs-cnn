@@ -30,6 +30,9 @@ BATCH_SIZE = 32
 MAX_EPOCAS = 60
 PACIENCIA = 10
 LR = {"mlp": 1e-4, "cnn": 1e-3}
+# Momento das medias moveis do BatchNorm. O padrao do Keras (0.99) demora a
+# acompanhar o treino com so 56 lotes por epoca e deixava a validacao instavel.
+BN_MOMENTUM = 0.9
 
 # --- Experimentos ---------------------------------------------------------
 # resolucao = (largura, altura). No Keras a entrada e (altura, largura, 3).

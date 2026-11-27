@@ -12,7 +12,7 @@ camadas de pre-processamento:
 from tensorflow import keras
 from tensorflow.keras import layers
 
-from src.config import LR, NUM_CLASSES, SEED
+from src.config import BN_MOMENTUM, LR, NUM_CLASSES, SEED
 
 
 def _entrada_e_preprocessamento(input_shape):
@@ -25,20 +25,25 @@ def _entrada_e_preprocessamento(input_shape):
 
 
 def criar_mlp(input_shape):
-    """Vetor de pixels -> 2 camadas ocultas ReLU -> softmax com 6 saidas."""
+    """Vetor de pixels -> 2 camadas ocultas (Dense+BN+ReLU+Dropout) -> softmax com 6 saidas.
+
+    O BatchNorm nas ocultas foi necessario: sem ele a MLP nao saia do chute
+    (acuracia de treino ~22%) com o aumento de dados ligado.
+    """
     entrada, x = _entrada_e_preprocessamento(input_shape)
     x = layers.Flatten(name="vetor_pixels")(x)
-    x = layers.Dense(256, activation="relu", name="oculta_1")(x)
-    x = layers.Dropout(0.3, seed=SEED)(x)
-    x = layers.Dense(128, activation="relu", name="oculta_2")(x)
-    x = layers.Dropout(0.3, seed=SEED)(x)
+    for n, unidades in enumerate((256, 128), start=1):
+        x = layers.Dense(unidades, use_bias=False, name=f"oculta_{n}")(x)
+        x = layers.BatchNormalization(momentum=BN_MOMENTUM, name=f"bn_oculta_{n}")(x)
+        x = layers.Activation("relu", name=f"relu_oculta_{n}")(x)
+        x = layers.Dropout(0.3, seed=SEED, name=f"dropout_{n}")(x)
     saida = layers.Dense(NUM_CLASSES, activation="softmax", name="saida")(x)
     return keras.Model(entrada, saida, name="mlp")
 
 
 def _bloco_conv(x, filtros, n):
     x = layers.Conv2D(filtros, 3, padding="same", use_bias=False, name=f"conv_{n}")(x)
-    x = layers.BatchNormalization(name=f"bn_{n}")(x)
+    x = layers.BatchNormalization(momentum=BN_MOMENTUM, name=f"bn_{n}")(x)
     x = layers.Activation("relu", name=f"relu_{n}")(x)
     return layers.MaxPooling2D(2, name=f"pool_{n}")(x)
 
