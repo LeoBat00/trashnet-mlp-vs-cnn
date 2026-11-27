@@ -1,0 +1,17 @@
+# Contexto do Claude
+contexto-claude/
+
+# Dados e saídas pesadas
+data/
+*.zip
+outputs/
+*.keras
+*.h5
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
