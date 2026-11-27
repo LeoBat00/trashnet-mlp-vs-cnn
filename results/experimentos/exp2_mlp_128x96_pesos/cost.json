@@ -1,0 +1,13 @@
+{
+  "parametros": 9472262,
+  "tamanho_modelo_mb": 108.45326137542725,
+  "epocas_executadas": 38,
+  "epoca_restaurada": 28,
+  "tempo_total_s": 58.35941948500022,
+  "tempo_medio_epoca_s": 1.4993690778683828,
+  "batch_size": 32,
+  "hardware": "Tesla T4",
+  "pico_vram_mb": 318.412353515625,
+  "pico_ram_processo_mb": 1855.11328125,
+  "metodo_medicao": "time.perf_counter em volta de model.fit (sem download, descompactacao e leitura das imagens, feitos antes); tempo por epoca via callback; pico de VRAM por tf.config.experimental.get_memory_info apos reset_memory_stats; pico de RAM do processo (RSS) amostrado a cada 0,5 s com psutil durante o fit"
+}

@@ -1,0 +1,40 @@
+{
+  "experimento": "exp3_cnn_128x96",
+  "modelo": "cnn",
+  "resolucao": [
+    128,
+    96
+  ],
+  "pesos_classe": false,
+  "input_shape_keras": [
+    96,
+    128,
+    3
+  ],
+  "semente": 42,
+  "batch_size": 32,
+  "otimizador": "Adam",
+  "learning_rate": 0.001,
+  "perda": "sparse_categorical_crossentropy",
+  "max_epocas": 60,
+  "early_stopping": {
+    "monitor": "val_loss",
+    "patience": 10,
+    "restore_best_weights": true
+  },
+  "pesos_de_classe": null,
+  "n_treino": 1768,
+  "n_validacao": 379,
+  "hardware": {
+    "tipo": "GPU",
+    "nome": "Tesla T4"
+  },
+  "versoes": {
+    "python": "3.13.16",
+    "tensorflow": "2.21.0",
+    "keras": "3.13.2",
+    "numpy": "2.4.6",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.6.1"
+  }
+}

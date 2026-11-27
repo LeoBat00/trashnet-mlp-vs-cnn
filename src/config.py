@@ -11,7 +11,7 @@ OUTPUTS_DIR = Path(os.environ.get("TRASHNET_OUTPUTS_DIR", RAIZ_REPO / "outputs")
 RESULTS_DIR = RAIZ_REPO / "results"
 SPLIT_CSV = RESULTS_DIR / "split.csv"
 # Copia leve das saidas (sem model.keras), versionada no repo
-RESULTS_EXP_DIR = RESULTS_DIR / "experimentos"
+RESULTS_EXP_DIR = Path(os.environ.get("TRASHNET_RESULTS_EXP_DIR", RESULTS_DIR / "experimentos"))
 ARQUIVOS_LEVES = ["config.json", "cost.json", "history.json", "metrics.json", "predictions.csv"]
 
 # --- Dados ----------------------------------------------------------------
